@@ -19,16 +19,21 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = 'RENDER' not in os.environ
 
-DEBUG = True
+DEBUG = False
 
 DOMAIN = os.environ.get('DOMAIN')
 
 ALLOWED_HOSTS = [
+    '.satisfya-ecommerce.onrender.com',
     'satisfya-ecommerce.onrender.com',
+    'www.satisfya-ecommerce.onrender.com',
     "127.0.0.1",
     "localhost",
     ]
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -115,25 +120,32 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": env.db("DATABASE_URL"),
 }
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'https://satisfya-ecommerce.onrender.com'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'https://satisfya-ecommerce.onrender.com'
 ]
 
 PASSWORD_HASHERS = [
