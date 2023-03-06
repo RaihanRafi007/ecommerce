@@ -24,6 +24,7 @@ DEBUG = True
 DOMAIN = os.environ.get('DOMAIN')
 
 ALLOWED_HOSTS = [
+    'satisfya-ecommerce.onrender.com',
     "127.0.0.1",
     "localhost",
     ]
